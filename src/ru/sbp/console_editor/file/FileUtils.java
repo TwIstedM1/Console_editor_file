@@ -32,7 +32,7 @@ public class FileUtils {
         }
         return Objects.requireNonNull(file)[num];
     }
-    public static void fileReader (File file) {
+    public static void fileReader (File file) {//прочесть содержимое файла
         try(FileReader fr = new FileReader(file);
             Scanner scan = new Scanner(fr);) {
             int i = 1;
@@ -62,9 +62,9 @@ public class FileUtils {
             System.out.println(ex.getMessage());
         }
     }
-    public static void readFile() {
-        StringBuilder sb = new StringBuilder(SecondMenu.selectedFile);
-        String result = sb.toString();
-        System.out.println(result);
-    }
+//    public static void readFile() {
+//        StringBuilder sb = new StringBuilder(SecondMenu.selectedFile);
+//        String result = sb.toString();
+//        System.out.println(result);
+//    }
 }

@@ -6,8 +6,7 @@ import ru.sbp.console_editor.menu.Menu;
 public class SecondMenuReadFile implements Menu {
     @Override
     public Menu handleInput(String value) {
-        FileUtils.readFile();
-        //FileUtils.fileReader(SecondMenu.selectedFile);
+        FileUtils.fileReader(SecondMenu.selectedFile);
         return new SecondMenu();
     }
 
