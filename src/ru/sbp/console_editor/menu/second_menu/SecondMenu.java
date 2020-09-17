@@ -7,6 +7,8 @@ import java.io.File;
 
 public class SecondMenu implements Menu {
     public static File selectedFile;
+    public static File[] catalogFile;
+
 
     public void drawMenu() {
         System.out.println(

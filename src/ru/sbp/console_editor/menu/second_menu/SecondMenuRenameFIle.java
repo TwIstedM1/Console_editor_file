@@ -8,8 +8,9 @@ import java.io.File;
 public class SecondMenuRenameFIle implements Menu {
     @Override
     public Menu handleInput(String nameFile) {
-        if (!nameFile.contains(".txt")) nameFile = String.format("%s.txt", nameFile);
-        FileUtils.reName(nameFile);
+        String txtnameFile = FileUtils.txt(nameFile);
+        FileUtils.reName(txtnameFile);
+        System.out.println("Имя файла изменено");
         return new SecondMenu();
     }
 

@@ -2,11 +2,7 @@ package ru.sbp.console_editor.file;
 
 import ru.sbp.console_editor.menu.second_menu.SecondMenu;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
+import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -14,24 +10,32 @@ public class FileUtils {
     public static final String directoryPath = "E:\\Java_Ilyha\\Console_editor_file\\src\\ru\\sbp\\console_editor\\file\\box_file\\";
 
     public boolean createFile(String nameFile) throws IOException {
-        if (!nameFile.contains(".txt")) nameFile = String.format("%s.txt", nameFile);
+        txt(nameFile);
         File dir = new File(directoryPath+nameFile);
         return dir.createNewFile();
     }
-
-    public static File[] catalogFile() {//вернуть массив с файлами
+    public static File[] catalogFile() {
         File directory = new File(directoryPath);
-        if (directory.isDirectory()) System.out.println(Arrays.toString(directory.listFiles()));
-        return new File[0];
-    }
-    public File selectedFile (int num) {
-        File directory = new File(directoryPath);
-        File[] file = new File[directoryPath.length()];
         if (directory.isDirectory()) {
-            file = directory.listFiles();
-        }
-        return Objects.requireNonNull(file)[num];
+            return directory.listFiles();
+        } else return new IOException;
     }
+
+    public static void printCatalogFile() {
+       File directory = new File(directoryPath);
+       if (directory.isDirectory()) {
+           int i = 0;
+           for (File item: directory.listFiles()) {
+               System.out.println(i + ". " + item.getName());
+               i++;
+           }
+       }
+    }
+
+    public File selectedFile (int num) {
+        return Objects.requireNonNull(SecondMenu.catalogFile)[num];
+    }
+
     public static void fileReader (File file) {//прочесть содержимое файла
         try(FileReader fr = new FileReader(file);
             Scanner scan = new Scanner(fr);) {
@@ -45,13 +49,10 @@ public class FileUtils {
             System.out.println(ex.getMessage());
         }
     }
-    public static void reName(String nameFile) {
+    public static boolean reName(String nameFile) throws IllegalStateException {
         File newName = new File(FileUtils.directoryPath+nameFile);
-        if(SecondMenu.selectedFile.renameTo(newName)){
-            System.out.println("Имя изменено");
-        }else{
-            System.out.println("Имя не изменено");
-        }
+        if(SecondMenu.selectedFile.renameTo(newName)) return true;
+        else return false; //throw new IllegalStateException("Unexpected nameFile: " + nameFile);
     }
     public static void contentChange (String content) {//наполнение файла
         try (FileWriter writer = new FileWriter(SecondMenu.selectedFile, false)) {
@@ -62,9 +63,8 @@ public class FileUtils {
             System.out.println(ex.getMessage());
         }
     }
-//    public static void readFile() {
-//        StringBuilder sb = new StringBuilder(SecondMenu.selectedFile);
-//        String result = sb.toString();
-//        System.out.println(result);
-//    }
+    public static String txt(String nameFile) {
+        if (!nameFile.contains(".txt")) nameFile = String.format("%s.txt", nameFile);
+        return nameFile;
+    }
 }

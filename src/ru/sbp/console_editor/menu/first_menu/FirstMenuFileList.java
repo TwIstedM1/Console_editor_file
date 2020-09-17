@@ -14,13 +14,14 @@ public class FirstMenuFileList implements Menu {
         int num = Integer.parseInt(number);
         FileUtils file = new FileUtils();
         selectedFile = file.selectedFile(num);
-        System.out.printf("Выбран: %s%n", selectedFile);
+        System.out.printf("Выбран: %s\n", selectedFile);
         return new SecondMenu();
     }
     @Override
     public void drawMenu() {
         System.out.println("Список файлов:");
-        FileUtils.catalogFile();
+        SecondMenu.catalogFile = FileUtils.catalogFile();
+        FileUtils.printCatalogFile();
         System.out.println("Выберите файл:");
     }
 }
