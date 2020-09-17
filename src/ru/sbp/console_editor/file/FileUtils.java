@@ -18,7 +18,7 @@ public class FileUtils {
         File directory = new File(directoryPath);
         if (directory.isDirectory()) {
             return directory.listFiles();
-        } else return new IOException;
+        } else return null;             //что тут лучше возвращать?
     }
 
     public static void printCatalogFile() {
@@ -49,11 +49,13 @@ public class FileUtils {
             System.out.println(ex.getMessage());
         }
     }
+
     public static boolean reName(String nameFile) throws IllegalStateException {
         File newName = new File(FileUtils.directoryPath+nameFile);
         if(SecondMenu.selectedFile.renameTo(newName)) return true;
         else return false; //throw new IllegalStateException("Unexpected nameFile: " + nameFile);
     }
+
     public static void contentChange (String content) {//наполнение файла
         try (FileWriter writer = new FileWriter(SecondMenu.selectedFile, false)) {
             String text = content;
@@ -63,6 +65,7 @@ public class FileUtils {
             System.out.println(ex.getMessage());
         }
     }
+    
     public static String txt(String nameFile) {
         if (!nameFile.contains(".txt")) nameFile = String.format("%s.txt", nameFile);
         return nameFile;
