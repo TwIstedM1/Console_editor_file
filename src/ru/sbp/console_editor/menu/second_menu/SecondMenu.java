@@ -16,7 +16,8 @@ public class SecondMenu implements Menu {
                         + "1. Изменить имя файла"+ "\n"
                         + "2. Изменить содержимое файла" + "\n"
                         + "3. Показать содержимое файла" + "\n"
-                        + "4. Назад" + "\n"
+                        + "4. Удалить файл" + "\n"
+                        + "5. Назад" + "\n"
         );
     }
 
@@ -29,6 +30,8 @@ public class SecondMenu implements Menu {
             case "3":
                 return new SecondMenuReadFile();
             case "4":
+                return new SecondMenuDeleteFile();
+            case "5":
                 return new FirstMenu();
             default:
                 throw new IllegalStateException("Unexpected value: " + value);

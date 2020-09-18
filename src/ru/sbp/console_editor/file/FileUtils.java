@@ -37,20 +37,21 @@ public class FileUtils {
     }
 
     public static void fileReader (File file) {//прочесть содержимое файла
+        StringBuilder sb = new StringBuilder();
         try(FileReader fr = new FileReader(file);
             Scanner scan = new Scanner(fr);) {
-            int i = 1;
             while (scan.hasNextLine()) {
-                System.out.println(scan.nextLine());
-                i++;
+                sb.append(scan.nextLine());
+                sb.append("\n");
             }
         }
         catch(IOException ex){
             System.out.println(ex.getMessage());
         }
+        System.out.println(sb);
     }
 
-    public static boolean reName(String nameFile) throws IllegalStateException {
+    public static boolean reName(String nameFile) {
         File newName = new File(FileUtils.directoryPath+nameFile);
         if(SecondMenu.selectedFile.renameTo(newName)) return true;
         else return false; //throw new IllegalStateException("Unexpected nameFile: " + nameFile);
@@ -65,9 +66,14 @@ public class FileUtils {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public static String txt(String nameFile) {
         if (!nameFile.contains(".txt")) nameFile = String.format("%s.txt", nameFile);
         return nameFile;
+    }
+
+    public static boolean deleteFile (File file) {
+        if(file.delete()) return true;
+            else return false;
     }
 }
