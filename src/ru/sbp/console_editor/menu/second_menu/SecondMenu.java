@@ -7,7 +7,7 @@ import java.io.File;
 
 public class SecondMenu implements Menu {
     public static File selectedFile;
-    public static File[] catalogFile;
+    //public static File[] catalogFile;//убрать
 
 
     public void drawMenu() {

@@ -20,8 +20,14 @@ public class FirstMenuFileList implements Menu {
     @Override
     public void drawMenu() {
         System.out.println("Список файлов:");
-        SecondMenu.catalogFile = FileUtils.catalogFile();
-        FileUtils.printCatalogFile();
+        File directory = new File(FileUtils.directoryPath());
+        if (directory.isDirectory()) {
+            int i = 0;
+            for (File item: FileUtils.catalogFile()) {//File item: catalogFile()directory.listFiles()
+                System.out.println(i + ". " + item.getName());
+                i++;
+            }
+        }
         System.out.println("Выберите файл:");
     }
 }

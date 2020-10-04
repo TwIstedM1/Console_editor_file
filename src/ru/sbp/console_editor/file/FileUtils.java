@@ -7,36 +7,30 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class FileUtils {
-    public static final String directoryPath = "E:\\Java_Ilyha\\Console_editor_file\\src\\ru\\sbp\\console_editor\\file\\box_file\\";
+
+    //public static final String directoryPath = "E:\\Java_Ilyha\\Console_editor_file\\src\\ru\\sbp\\console_editor\\file\\box_file\\";
+
+    public static String directoryPath() {
+        return new File("src\\ru\\sbp\\console_editor\\file\\box_file\\").getAbsolutePath();
+    }
 
     public boolean createFile(String nameFile) throws IOException {
-        txt(nameFile);
-        File dir = new File(directoryPath+nameFile);
+        File dir = new File(directoryPath(), txt(nameFile));
         return dir.createNewFile();
     }
+
     public static File[] catalogFile() {
-        File directory = new File(directoryPath);
+            File directory = new File(directoryPath());
         if (directory.isDirectory()) {
             return directory.listFiles();
-        } else return null;             //что тут лучше возвращать?
-    }
-
-    public static void printCatalogFile() {
-       File directory = new File(directoryPath);
-       if (directory.isDirectory()) {
-           int i = 0;
-           for (File item: directory.listFiles()) {
-               System.out.println(i + ". " + item.getName());
-               i++;
-           }
-       }
+        } else return new File[0];
     }
 
     public File selectedFile (int num) {
-        return Objects.requireNonNull(SecondMenu.catalogFile)[num];
+        return Objects.requireNonNull(catalogFile())[num];
     }
 
-    public static void fileReader (File file) {//прочесть содержимое файла
+    public static void fileReader (File file) {
         StringBuilder sb = new StringBuilder();
         try(FileReader fr = new FileReader(file);
             Scanner scan = new Scanner(fr);) {
@@ -52,15 +46,13 @@ public class FileUtils {
     }
 
     public static boolean reName(String nameFile) {
-        File newName = new File(FileUtils.directoryPath+nameFile);
-        if(SecondMenu.selectedFile.renameTo(newName)) return true;
-        else return false; //throw new IllegalStateException("Unexpected nameFile: " + nameFile);
+        File newName = new File(directoryPath()+nameFile);
+        return SecondMenu.selectedFile.renameTo(newName);
     }
 
-    public static void contentChange (String content) {//наполнение файла
+    public static void contentChange (String content) {
         try (FileWriter writer = new FileWriter(SecondMenu.selectedFile, false)) {
-            String text = content;
-            writer.write(text);
+            writer.write(content);
             writer.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -73,7 +65,6 @@ public class FileUtils {
     }
 
     public static boolean deleteFile (File file) {
-        if(file.delete()) return true;
-            else return false;
+        return file.delete();
     }
 }
